@@ -11,7 +11,5 @@ class UserDTO extends Data
         public string $email,
         public string $password
     )
-    {
-  $this->password = Hash::make($password);
-    }
+    {}
 }
