@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->id(); // Auto-incrementing primary key
-            $table->unsignedBigInteger('order_id'); // Foreign key reference to Orders Table
-            $table->unsignedBigInteger('product_id'); // Foreign key reference to Products Table
+            $table->id();
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('product_id');
             $table->integer('quantity');
-            $table->decimal('unit_price', 10, 2); // Example: 99.99
-            $table->timestamps(); // Created at and updated at timestamps
+            $table->decimal('unit_price', 10, 2);
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('product_id')->references('id')->on('products');
+            $table->timestamps();
         });
     }
 

@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id(); // Auto-incrementing primary key
-            $table->unsignedBigInteger('user_id'); // Foreign key reference to Users Table
+            $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->date('order_date');
-            $table->decimal('total_amount', 10, 2); // Example: 12345.67
-            $table->timestamps(); // Created at and updated at timestamps
+            $table->decimal('total_amount', 10, 2);
+            $table->decimal('total_price', 10, 2);
+            $table->timestamps();
         });
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Products;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -21,12 +22,20 @@ public function show($id)
 //deleteing
 public function delete($id)
 {
- $Products = Products::findOrFail($id);
- $Products -> delete();
- return response()->json([
-'message' => 'has been deleted'
-]);
+    try {
+        DB::table('order_details')->where('product_id', $id)->delete();
+        $product = Products::findOrFail($id);
+        $product->delete();
+         return response()->json([
+            'message' => 'Product has been deleted'
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage()
+        ], 400);
+    }
 }
+
 
 // storing
 public function insert(Request $request)

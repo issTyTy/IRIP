@@ -59,6 +59,7 @@ Route::get('/order/get/{id}', [OrderController::class, 'show']);
 Route::get('/order/get_order_items/{id}', [OrderController::class, 'get_order_items']);
 Route::get('/order/get_user_orders/{id}', [OrderController::class, 'get_user_orders']);
 Route::put('/order/update/{id}', [OrderController::class, 'update']);
+Route::post('/order/store', [OrderController::class, 'store']);
 Route::delete('/order/delete/{id}', [OrderController::class, 'delete']);
 });
 Route::group([],function(){});

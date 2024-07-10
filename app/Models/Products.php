@@ -15,6 +15,7 @@ class Products extends Model
         'category_id',
         'image',
     ];
+     public $timestamps = false;
     use HasFactory;
     public function orderDetails()
     {
