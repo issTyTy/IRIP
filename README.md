@@ -31,6 +31,11 @@ database must be in MySQL
 the app so far is only API testing so you will need POSTMAN
 
 # Database Schema
+
+[Categories]
+-name:varchar
+-description: varchar
+
 [User]
 - id: int (PK)
 - name: varchar
@@ -46,9 +51,6 @@ the app so far is only API testing so you will need POSTMAN
 - created_at: timestamp
 - updated_at: timestamp
   
-[Categories]
--name:varchar
--description:varchar
 
 [CartItem]
 - id: int (PK)
