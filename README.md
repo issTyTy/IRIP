@@ -1,4 +1,4 @@
-# Project Name 
+# E-commerce API
 i would say my first E-commerce backend project using PHP and laravel.
 
 # Features
