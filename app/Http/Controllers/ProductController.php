@@ -23,7 +23,7 @@ public function show($id)
 public function delete($id)
 {
     try {
-        DB::table('order_details')->where('product_id', $id)->delete();
+        DB::table('order_details')->where('product_id', $id)->delete(); // I know it's bad and i should make it soft delete instead
         $product = Products::findOrFail($id);
         $product->delete();
          return response()->json([

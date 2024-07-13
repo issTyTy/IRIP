@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('order_date');
             $table->decimal('total_amount', 10, 2);
-            $table->decimal('total_price', 10, 2);
+            $table->decimal('total_price', 10, 2)->default(0);
             $table->timestamps();
         });
     }

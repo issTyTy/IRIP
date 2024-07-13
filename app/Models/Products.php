@@ -8,6 +8,8 @@ use App\Models\OrderDetails;
 
 class Products extends Model
 {
+
+
  protected $fillable = [
         'name',
         'description',
@@ -15,7 +17,6 @@ class Products extends Model
         'category_id',
         'image',
     ];
-     public $timestamps = false;
     use HasFactory;
     public function orderDetails()
     {

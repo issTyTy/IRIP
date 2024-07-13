@@ -21,8 +21,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->string('image')->nullable();
             $table->integer('quantity')->default(0);
-             $table->timestamp('updated_at')->nullable()->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
-            $table->timestamps();
+             $table->timestamps();
         });
     }
 
