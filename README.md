@@ -45,7 +45,7 @@ the app so far is only API testing so you will need POSTMAN
 - user_id: int (FK to User)
 - created_at: timestamp
 - updated_at: timestamp
-- 
+  
 [Categories]
 -name:varchar
 -description:varchar
