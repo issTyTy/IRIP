@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\OrderDetails;
 use App\Models\Orders;
 use App\Models\Products;
@@ -40,39 +42,44 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         try {
-            $request->validate([
-                'order_date' => 'required|date',
-                'total_price' => 'required|numeric',
-                'order_items' => 'required|array',
-                'order_items.*.product_id' => 'required|integer|exists:products,id',
-                'order_items.*.quantity' => 'required|integer',
-                'order_items.*.unit_price' => 'required|numeric',
-            ]);
-
-            if (Auth::check()) {
-                $order = new Orders();
-                $order->user_id = Auth::id();
-                $order->order_date = $request->order_date;
-                $order->total_price = $request->total_price;
-                $order->save();
-
-                foreach ($request->order_items as $orderItem) {
-                    $item = new OrderDetails();
-                    $item->order_id = $order->id;
-                    $item->product_id = $orderItem['product_id'];
-                    $item->quantity = $orderItem['quantity'];
-                    $item->unit_price = $orderItem['unit_price'];
-                    $item->save();
-
-                    $product = Products::find($orderItem['product_id']);
-                    $product->quantity -= $orderItem['quantity'];
-                    $product->save();
-                }
-
-                return response()->json(['message' => 'Order added successfully'], 201);
-            } else {
+            if (!Auth::check()) {
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
+
+            $user = Auth::user();
+            $cart = Cart::where('user_id', $user->id)->firstOrFail();
+            $cartItems = CartItem::where('cart_id', $cart->id)->get();
+
+            if ($cartItems->isEmpty()) {
+                return response()->json(['message' => 'Cart is empty'], 400);
+            }
+
+            $totalPrice = 0;
+            foreach ($cartItems as $cartItem) {
+                $totalPrice += $cartItem->quantity * $cartItem->product->price;
+            }
+            $order = new Orders();
+            $order->user_id = $user->id;
+            $order->order_date = now();
+            $order->total_price = $totalPrice;
+            $order->save();
+
+            foreach ($cartItems as $cartItem) {
+                $orderDetail = new OrderDetails();
+                $orderDetail->order_id = $order->id;
+                $orderDetail->product_id = $cartItem->product_id;
+                $orderDetail->quantity = $cartItem->quantity;
+                $orderDetail->unit_price = $cartItem->product->price;
+                $orderDetail->save();
+
+                $product = Products::find($cartItem->product_id);
+                $product->quantity -= $cartItem->quantity;
+                $product->save();
+            }
+
+            CartItem::where('cart_id', $cart->id)->delete();
+
+            return response()->json(['message' => 'Order created successfully'], 201);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
         }
