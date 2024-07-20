@@ -1,7 +1,9 @@
-# E-commerce API
+# This project is not complete and might not work properly. DO NOT TRY IT YET!
+
+## E-commerce API
 i would say my first E-commerce backend project using PHP and laravel.
 
-# Features
+## Features
 user can do the following:-
 -register and login
 -view a product
@@ -11,26 +13,26 @@ user can do the following:-
 -check orders (admin)
 -check items in the order (admin)
 
-# Getting Started
+## Getting Started
 -install composer components 
 -make .env
 -make a database and connect it in the .env file
 -regenerate the app key (php artisan key:generate)
 
-# Prerequisites
+## Prerequisites
 -php
 -composer
 -php server (ex.XAMPP controller)
 -Node.js
 
 
-#Configuration
+## Configuration
 database must be in MySQL
 
 #Usage
 the app so far is only API testing so you will need POSTMAN
 
-# Database Schema
+## Database Schema
 
 [Categories]
 -name:varchar
